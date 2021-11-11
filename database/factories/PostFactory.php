@@ -23,13 +23,15 @@ class PostFactory extends Factory
      */
     public function definition()
     {
+        //  "user_id" => User::all()->random()->id,
+        //  "category_id" => Category::all()->random()->id,
         return [
             "user_id"=> User::factory(),
             "category_id"=> Category::factory(),
-            "title"=> $this->faker->sentence(),
-            "slug"=> $this->faker->slug(),
-            "excerpt"=> $this->faker->sentence(),
-            "body"=> $this->faker->paragraph(),
+            "title" => $this->faker->sentence(),
+            "slug" => $this->faker->slug(),
+            "excerpt" => $this->faker->sentence(),
+            "body" => $this->faker->paragraph(),
         ];
     }
 }
