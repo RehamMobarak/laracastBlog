@@ -9,6 +9,9 @@ class Post extends Model
 {
     use HasFactory;
 
+    // eagerLoading with every post query as a default
+    protected $with = ['category', 'author'];
+
     public function category()
     {
         return  $this->belongsTo(Category::class);
