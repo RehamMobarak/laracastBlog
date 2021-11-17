@@ -47,7 +47,9 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         return view('posts.index', [
-            "posts" => $category->posts
+            "posts" => $category->posts,
+            'categories'=>Category::all(),
+            "currentCategory"=> $category
         ]);
     }
 
