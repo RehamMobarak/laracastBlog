@@ -47,9 +47,9 @@
                </h1>
 
                <div class="space-y-4 lg:text-lg leading-loose">
-                  <p>{{ $post->body }}</p>
+                  {!! $post->body !!}
                   <h2 class="font-bold text-lg">{{ $post->slug }}</h2>
-                  <p>{{ $post->body }}</p>
+                  {!! $post->body !!}
                </div>
             </div>
          </article>
