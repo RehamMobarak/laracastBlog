@@ -15,14 +15,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest();
-        // ->with('category', 'author')
-        if (request('search')) {
-            $posts->where('title', 'like', '%' . request('search') . '%')
-                ->orWhere('body', 'like', '%' . request('search') . '%');
-        }
+      // what we have here -request(['search']) = ['search'=>'test']-
+      // .. will ba passed to scopeFilters which is defined in Post model
+      
         return view('posts.index', [
-            'posts' => $posts->get(),
+            'posts' => Post::latest()->filter(request(['search']))->get(),
             'categories' => Category::all(),
         ]);
     }
