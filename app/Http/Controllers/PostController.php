@@ -16,11 +16,13 @@ class PostController extends Controller
     public function index()
     {
       // what we have here -request(['search']) = ['search'=>'test']-
-      // .. will ba passed to scopeFilters which is defined in Post model
-      
+      // .. will be passed to scopeFilters which is defined in Post model
+        //! remember to pass all filters from the request
+        
         return view('posts.index', [
-            'posts' => Post::latest()->filter(request(['search']))->get(),
+            'posts' => Post::latest()->filter(request(['search','category']))->get(),
             'categories' => Category::all(),
+            'currentCategory'=> Category::firstWhere('slug', request('category'))
         ]);
     }
 

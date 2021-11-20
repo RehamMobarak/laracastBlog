@@ -16,20 +16,44 @@ class Post extends Model
 
     public function scopeFilter($query, array $filters)
     {
-        //* note: $query is passed by Laravel automatically
+        //* note: $query is passed(made by eloquent) by Laravel automatically
         //* .. and filters with its values are passed from controller
 
         //"??"	Null coalescing	-> ($x = expr1 ?? expr2)	Returns the value of $x.
-        // The value of $x is expr1 if expr1 exists, and is not NULL.
-        // If expr1 does not exist, or is NULL, the value of $x is expr2.
-        //= $query value is $filters['search'] if it's set or not NULL, else it'll be False
+        //=$filters['search'] value is = function result to be set or  not NULL, else it'll be False
         // to handle situations where there's no search key
+        // if ( isset($filters['search']) ){dd($filters['search']);}
 
-        $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->where('title', 'like', '%' . $search . '%')
-                ->orWhere('body', 'like', '%' . $search . '%');
-        });
+
+        //? After upgrading to PHP 8.0.13 - using arrow function /
+        $query->when(
+            $filters['search'] ?? false,
+            fn ($query, $search) =>
+            $query
+                ->where('title', 'like', '%' . $search . '%')
+                ->orWhere('body', 'like', '%' . $search . '%')
+
+        );
+        /************************************** */
+
+        //#1 first: get the Category matches with the slug from the *request (auto by Laravel)
+        //#2 then: find the Post that (where) has a Category() that matches it
+        //#3 if there's no result to that then set query as false and show * posts as default
+        //post->category_id : category_id->category_slug : category->posts()
+
+        $query->when(
+            $filters['category'] ?? false,
+            fn ($query,  $category) =>
+            $query->whereHas(
+                'category',
+                fn ($query) =>
+                $query->where('slug',  $category) //#1
+            )
+
+        );
     }
+
+
 
     public function category()
     {
