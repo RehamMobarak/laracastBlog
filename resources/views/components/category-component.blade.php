@@ -1,6 +1,3 @@
-{{-- <div>
-    <!-- Very little is needed to make a happy life. - Marcus Aurelius -->
-</div> --}}
 <x-dropdown>
     {{-- button trigger --}}
     <x-slot name="trigger">

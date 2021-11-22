@@ -24,7 +24,7 @@ class Post extends Model
         // to handle situations where there's no search key
         // if ( isset($filters['search']) ){dd($filters['search']);}
 
-
+        // search filter
         //? After upgrading to PHP 8.0.13 - using arrow function /
         $query->when(
             $filters['search'] ?? false,
@@ -41,6 +41,7 @@ class Post extends Model
         //#3 if there's no result to that then set query as false and show * posts as default
         //post->category_id : category_id->category_slug : category->posts()
 
+        // By category filter
         $query->when(
             $filters['category'] ?? false,
             fn ($query,  $category) =>
@@ -49,7 +50,18 @@ class Post extends Model
                 fn ($query) =>
                 $query->where('slug',  $category) //#1
             )
+        );
 
+        /************************************** */
+        // By author filter
+        $query->when(
+            $filters['author'] ?? false,
+            fn ($query,  $author) =>
+            $query->whereHas(
+                'author',
+                fn ($query) =>
+                $query->where('username',  $author)
+            )
         );
     }
 
