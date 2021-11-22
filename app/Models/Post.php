@@ -29,10 +29,12 @@ class Post extends Model
         $query->when(
             $filters['search'] ?? false,
             fn ($query, $search) =>
-            $query
-                ->where('title', 'like', '%' . $search . '%')
-                ->orWhere('body', 'like', '%' . $search . '%')
-
+            $query->where(
+                // to solve conflict in SQL that showed diff catgs when using together with search filter, now we first run wheres and then find the exact catg
+                fn ($query) =>
+                $query->where('title', 'like', '%' . $search . '%')
+                    ->orWhere('body', 'like', '%' . $search . '%')
+            )
         );
         /************************************** */
 
