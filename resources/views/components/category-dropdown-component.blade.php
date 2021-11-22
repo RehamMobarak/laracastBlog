@@ -14,7 +14,9 @@
     <x-dropdown-item href="/" :active='request()->routeIs("home")'> All </x-dropdown-item>
 
     @foreach ($categories as $category)
-    <x-dropdown-item name="category" href="/?category={{ $category->slug }}"
+    {{-- http_build_query : ['name'=>'joe'] :: name=joe --}}
+    {{-- we used except('category') so we can get all other filters queries and don't duplicate category request --}}
+    <x-dropdown-item name="category" href="/?category={{ $category->slug }}&{{ http_build_query(request()->except('category')) }}"
         :active='request()->is("categories/.{$category->slug} ")'>
         {{ ucwords($category->name) }}
     </x-dropdown-item>

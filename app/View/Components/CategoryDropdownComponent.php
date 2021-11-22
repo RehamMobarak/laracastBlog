@@ -5,7 +5,7 @@ namespace App\View\Components;
 use App\Models\Category;
 use Illuminate\View\Component;
 
-class CategoryComponent extends Component
+class CategoryDropdownComponent extends Component
 {
     /**
      * Get the view / contents that represent the component.
@@ -14,7 +14,7 @@ class CategoryComponent extends Component
      */
     public function render()
     {
-        return view('components.category-component', [
+        return view('components.category-dropdown-component', [
             'categories' => Category::all(),
             'currentCategory' => Category::firstWhere('slug', request('category'))
         ]);
