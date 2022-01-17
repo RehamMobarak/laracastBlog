@@ -18,9 +18,10 @@ class PostController extends Controller
       // what we have here -request(['search']) = ['search'=>'test']-
       // .. will be passed to scopeFilters which is defined in Post model
         //! remember to pass all filters from the request
-
+       //withQueryString() to keep category filter if the cat has > one page results
+       
         return view('posts.index', [
-            'posts' => Post::latest()->filter(request(['search','category','author']))->paginate(6),
+            'posts' => Post::latest()->filter(request(['search','category','author']))->paginate(6)->withQueryString(),
         ]);
     }
 
