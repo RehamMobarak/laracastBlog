@@ -11,12 +11,16 @@
     </x-slot>
 
     {{-- links --}}
-    <x-dropdown-item href="/" :active='request()->routeIs("home")'> All </x-dropdown-item>
+    {{-- update All link to exclude filters --}}
+    <x-dropdown-item href="/?{{ http_build_query(request()->except('category', 'page')) }}" :active='request()->routeIs("home")'> All </x-dropdown-item>
 
     @foreach ($categories as $category)
+
     {{-- http_build_query : ['name'=>'joe'] :: name=joe --}}
     {{-- we used except('category') so we can get all other filters queries and don't duplicate category request --}}
-    <x-dropdown-item name="category" href="/?category={{ $category->slug }}&{{ http_build_query(request()->except('category')) }}"
+    {{-- we added 'page' to exception because we don't ask for filtering in a certain page--}}
+
+    <x-dropdown-item name="category" href="/?category={{ $category->slug }}&{{ http_build_query(request()->except('category', 'page')) }}"
         :active='request()->is("categories/.{$category->slug} ")'>
         {{ ucwords($category->name) }}
     </x-dropdown-item>
