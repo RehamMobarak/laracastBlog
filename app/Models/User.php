@@ -44,4 +44,9 @@ class User extends Authenticatable
     {
         return  $this->hasMany(Post::class);
     }
+
+    // use mutators to hash pw before storing in db
+    public function setPasswordAttribute($password){
+        $this->attributes['password'] = bcrypt($password);
+    }
 }
