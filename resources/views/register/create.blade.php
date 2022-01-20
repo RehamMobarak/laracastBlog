@@ -7,15 +7,15 @@
                 <form method="POST" action="/register" class="mt-10">
                     @csrf
                     Name
-                    <input type="text" name="name">
+                    <input type="text" name="name" value="{{ old('name') }}">
                     <br>
 
                     Username
-                    <input type="text" name="username">
+                    <input type="text" name="username"  value="{{ old('username') }}">
                     <br>
 
                     Email
-                    <input type="email" name="email">
+                    <input type="email" name="email"  value="{{ old('email') }}">
                     <br>
 
                     Password
