@@ -25,6 +25,6 @@ Route::get('posts/{post:slug}', [PostController::class, 'show']);
 
 //* when we use filters we don't need a route : authors/username , categories/slug
 
-Route::get('/register',[RegisterController::class, 'create']);
-Route::post('/register',[RegisterController::class, 'store']);
+Route::get('/register',[RegisterController::class, 'create'])->middleware('guest');
+Route::post('/register',[RegisterController::class, 'store'])->middleware('guest');
 
