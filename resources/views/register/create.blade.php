@@ -15,17 +15,23 @@
                     <br>
 
                     Email
-                    <input type="text" name="email">
+                    <input type="email" name="email">
                     <br>
 
                     Password
-                    <input type="text" name="password">
+                    <input type="password" name="password">
 
 
                     <button type="submit" value="submit">submit </button>
 
                 </form>
-
+                @if ($errors->any())
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li class="text-red-500 text-xs">{{$error }}</li>
+                        @endforeach
+                    </ul>
+                @endif
         </main>
     </section>
 </x-layout>
